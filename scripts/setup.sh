@@ -21,6 +21,8 @@ if [ "$OSTYPE" = "darwin" ]; then
   fi
 
 if [ "$OSTYPE" = "darwin" ]; then
+  brew install fd
+  brew install tree
   echo "Setup Alacritty"
   brew install alacritty
   rm -f ~/.config/alacritty/alacritty.toml
@@ -43,6 +45,7 @@ if [ "$OSTYPE" = "darwin" ]; then
   brew tap homebrew/cask-fonts && brew install font-hack-nerd-font
 else
   sudo apt update && sudo apt upgrade -y
+  sudo apt install net-tools fd-find tree -y
   echo "Setup zsh"
   sudo apt install zsh -y
   echo "Add apt repositories"
