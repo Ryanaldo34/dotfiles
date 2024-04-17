@@ -62,6 +62,9 @@ else
   echo "Install Alacritty"
   sudo apt install alacritty -y
   rm -f ~/.config/alacritty/alacritty.toml
+  # set alacritty as default terminal
+  sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which alacritty) 50
+  sudo update-alternatives --config x-terminal-emulator
   echo "Install Tmux"
   sudo apt install tmux -y
   rm -f ~/.config/tmux/tmux.conf
