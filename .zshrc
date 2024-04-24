@@ -97,14 +97,24 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="nvim ~/.zshrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias update="sudo apt update && sudo apt upgrade -y"
+if command -v apt >/dev/null 2>&1; then
+  alias update="sudo apt update && sudo apt upgrade -y"
+else
+  alias update="sudo pacman -Sy"
+fi
 alias nvim-config="cd ~/.config/nvim && nvim"
+alias dotfiles="cd ~/dotfiles/ && nvim"
+alias dotfiles-update="cd ~/dotfiles && stow ."
 
 export PATH=$PATH:/home/ryan/.local/bin
 export GOPATH=$HOME/go
-export GOROOT=/usr/lib/go-1.21
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-export PATH=$PATH:/home/ryan/.local/share/bob/nvim-bin
+export PATH=$PATH:$(go env GOBIN):$(go env GOPATH)/bin:$HOME/.local/share/bob/nvim-bin
+if command -v fd >/dev/null 2>&1; then
+  export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
+  alias open-file='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+else
+  export FZF_DEFAULT_COMMAND='fdfind --type file --follow --hidden --exclude .git'
+  alias open-file='fdfind --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+fi
+
 . "$HOME/.cargo/env"
