@@ -108,6 +108,7 @@ alias dotfiles-update="cd ~/dotfiles && stow ."
 
 export PATH=$PATH:/home/ryan/.local/bin
 export GOPATH=$HOME/go
+export GOBIN=$HOME/go/bin
 export PATH=$PATH:$(go env GOBIN):$(go env GOPATH)/bin:$HOME/.local/share/bob/nvim-bin
 if command -v fd >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
