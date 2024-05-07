@@ -1,16 +1,9 @@
 #!/bin/bash
 
-if [ "$EUID" -nq 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
   echo "This script requires you to run as root with 'sudo'"
   exit 1
 fi
-
-if command -v git &>/dev/null; then
-  echo "This script requires you to have git installed already"
-  exit 1
-fi
-
-distro="macOS"
 
 if [ "$OSTYPE" = "darwin" ]; then
   echo "Setting up Homebrew"
@@ -26,17 +19,11 @@ if [ "$OSTYPE" = "darwin" ]; then
   else
       echo "Homebrew is already installed."
   fi
-else
-  if command -v pacman >/dev/null 2>&1; then
-    distro="arch"
-  else
-    distro="deb"
-  fi
 fi
 
 install_linux_package() {
   for package in "$@"; do
-    if [ "$distro" = "arch" ]; then
+    if command -v pacman &>/dev/null; then
       pacman -S $package
     else
       apt install $package -y
@@ -44,7 +31,7 @@ install_linux_package() {
   done
 }
 
-if [ "$OSTYPE" = "darwin" ]; then
+if [ "$OSTYPE" == "darwin" ]; then
   brew install fd
   brew install tree
   echo "Setup Alacritty"
@@ -68,11 +55,10 @@ if [ "$OSTYPE" = "darwin" ]; then
   echo "Install nerd fonts"
   brew tap homebrew/cask-fonts && brew install font-hack-nerd-font
 else
-  if [ "$distro" = "arch"]; then
+  if command -v pacman &>/dev/null; then
     pacman -Sy
-    pacman -S iputils dnsutils fd go i3
-    pacman -U python312
-    echo "exec i3" | tee -a /etc/X11/xinit/xinitrc > /dev/null
+    pacman -S iputils dnsutils fd go ttf-jetbrains-mono-nerd
+    #echo "exec i3" | tee -a /etc/X11/xinit/xinitrc > /dev/null
   else
     add-apt-repository ppa:aslatter/ppa -y
     add-apt-repository ppa:longsleep/golang-backports -y
@@ -89,7 +75,7 @@ else
     update-alternatives --config x-terminal-emulator
   fi
 
-  install_linux_package zsh tree alacritty tmux icu unzip dotnet-sdk feh
+  install_linux_package zsh tree alacritty tmux icu unzip dotnet-sdk feh stow fzf
 fi
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -98,18 +84,14 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 # install node lts
 nvm install 20
 curl -fsSL https://bun.sh/install | bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-echo "Install Bob and Nvim"
-cargo install bob-nvim
-bob install latest
 
-if [ "$SHELL" = "/bin/bash" ]; then
+if [ "$SHELL" == "/bin/bash" ]; then
   echo "Setting zsh as default shell"
-  echo "y" | sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 mkdir -p ~/.config/nvim
-git clone https://github.com/Ryanaldo34/NeoVimConfig.git ~/.config/nvim
+git clone git@github.com:Ryanaldo34/NeoVimConfig.git ~/.config/nvim
 cd ~/.config/nvim && git checkout me && cd ~
 echo "Setting sym links for configs"
 rm -f ~/.config/alacritty/alacritty.toml

@@ -110,6 +110,8 @@ export PATH=$PATH:/home/ryan/.local/bin
 export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$PATH:$(go env GOBIN):$(go env GOPATH)/bin:$HOME/.local/share/bob/nvim-bin
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 if command -v fd >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
   alias open-file='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
