@@ -57,7 +57,8 @@ if [ "$OSTYPE" == "darwin" ]; then
 else
   if command -v pacman &>/dev/null; then
     pacman -Sy
-    pacman -S iputils dnsutils fd go ttf-jetbrains-mono-nerd
+    pacman -S iputils dnsutils fd go ttf-jetbrains-mono-nerd bob
+    bob install stable && bob use stable
     #echo "exec i3" | tee -a /etc/X11/xinit/xinitrc > /dev/null
   else
     add-apt-repository ppa:aslatter/ppa -y
@@ -85,7 +86,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 nvm install 20
 curl -fsSL https://bun.sh/install | bash
 
-if [ "$SHELL" == "/bin/bash" ]; then
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
   echo "Setting zsh as default shell"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
