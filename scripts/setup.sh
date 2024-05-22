@@ -71,7 +71,7 @@ else
     sudo update-alternatives --config x-terminal-emulator
   fi
 
-  install_linux_package zsh tree alacritty tmux icu unzip dotnet-sdk feh stow fzf
+  install_linux_package zsh tree alacritty tmux icu unzip dotnet-sdk feh stow fzf bat
 fi
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -79,11 +79,6 @@ echo "Install Node JS"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 curl -fsSL https://bun.sh/install | bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-if [ "$SHELL" != "/usr/bin/zsh" ]; then
-  echo "Setting zsh as default shell"
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
 
 mkdir -p ~/.config/nvim
 git clone git@github.com:Ryanaldo34/NeoVimConfig.git ~/.config/nvim
@@ -93,4 +88,6 @@ rm -f ~/.config/alacritty/alacritty.toml
 rm -f ~/.config/tmux/tmux.conf
 rm -f ~/.config/i3/config
 cd ~/dotfiles && stow .
-echo "Setup completed!"
+if [ "$SHELL" != "/usr/bin/zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi

@@ -115,9 +115,11 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 if command -v fd >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
   alias open-file='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+  alias fzf='fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"'
 else
   export FZF_DEFAULT_COMMAND='fdfind --type file --follow --hidden --exclude .git'
   alias open-file='fdfind --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+  alias fzf='fzf --preview "batcat --color=always --style=numbers --line-range=:500 {}"'
 fi
 
 . "$HOME/.cargo/env"
