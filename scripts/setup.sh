@@ -52,7 +52,7 @@ if [ "$OSTYPE" == "darwin" ]; then
 else
   if command -v pacman &>/dev/null; then
     sudo pacman -Sy
-    sudo pacman -S iputils dnsutils fd go ttf-jetbrains-mono-nerd bob
+    sudo pacman -S iputils dnsutils fd go ttf-jetbrains-mono-nerd bob docker
     bob install stable && bob use stable
     #echo "exec i3" | tee -a /etc/X11/xinit/xinitrc > /dev/null
   else
@@ -60,7 +60,7 @@ else
     sudo add-apt-repository ppa:longsleep/golang-backports -y
     sudo add-apt-repository ppa:deadsnakes/ppa -y
     sudo apt-update && apt-upgrade -y
-    sudo apt install net-tools python3.12 golang-go fd-find alacritty -y
+    sudo apt install net-tools python3.12 golang-go fd-find alacritty docker.io -y
     echo "Install nerd fonts"
     wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip \
     && cd ~/.local/share/fonts \
@@ -71,7 +71,7 @@ else
     sudo update-alternatives --config x-terminal-emulator
   fi
 
-  install_linux_package zsh tree alacritty tmux icu unzip dotnet-sdk feh stow fzf bat
+  install_linux_package zsh tree alacritty tmux icu unzip dotnet-sdk feh stow fzf bat ripgrep 
 fi
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
