@@ -51,7 +51,7 @@ if [ "$OSTYPE" == "darwin" ]; then
   brew tap homebrew/cask-fonts && brew install font-hack-nerd-font
 else
   if command -v pacman &>/dev/null; then
-    sudo pacman -Sy
+    sudo pacman -Syu
     sudo pacman -S iputils dnsutils fd go ttf-jetbrains-mono-nerd bob docker
     bob install stable && bob use stable
     #echo "exec i3" | tee -a /etc/X11/xinit/xinitrc > /dev/null
@@ -71,7 +71,7 @@ else
     sudo update-alternatives --config x-terminal-emulator
   fi
 
-  install_linux_package zsh tree alacritty tmux icu unzip dotnet-sdk feh stow fzf bat ripgrep 
+  install_linux_package zsh tree alacritty tmux icu unzip dotnet-sdk feh stow fzf bat ripgrep zoxide
 fi
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

@@ -100,7 +100,7 @@ source $ZSH/oh-my-zsh.sh
 if command -v apt >/dev/null 2>&1; then
   alias update="sudo apt update && sudo apt upgrade -y"
 else
-  alias update="sudo pacman -Sy"
+  alias update="sudo pacman -Syu"
 fi
 alias nvim-config="cd ~/.config/nvim && nvim"
 alias dotfiles="cd ~/dotfiles/ && nvim"
@@ -123,3 +123,4 @@ else
 fi
 
 . "$HOME/.cargo/env"
+eval "$(zoxide init zsh)"
