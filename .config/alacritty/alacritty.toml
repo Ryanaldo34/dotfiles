@@ -95,4 +95,4 @@ style = "Regular"
 
 [shell]
 args = ["-l"]
-program = "/usr/bin/zsh"
+program = "zsh"
